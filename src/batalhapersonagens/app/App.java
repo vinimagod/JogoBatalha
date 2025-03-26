@@ -2,6 +2,7 @@ package batalhapersonagens.app;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Random;
 
 import batalhapersonagens.model.Mago;
 import batalhapersonagens.model.Arqueiro;
@@ -13,6 +14,7 @@ public class App {
     Scanner scan = new Scanner(System.in);
     ArrayList<Personagem> personagens = new ArrayList<>();
     JogoBatalha jogoBatalha = new JogoBatalha();
+    Random random = new Random();
 
     public void escolhaPersonagens(){
 
@@ -28,7 +30,7 @@ public class App {
                 System.out.println("-- GUERREIRO --");
                 System.out.println("Informe o nome do guerreiro: ");
                 nome = scan.nextLine();
-                System.out.println("Seu guerreiro se chama: " + nome.toUpperCase());
+                System.out.println("\nSeu guerreiro se chama: " + nome.toUpperCase());
                 Guerreiro guerreiro = new Guerreiro(nome);
                 personagens.add(guerreiro);
                 break;
@@ -37,7 +39,7 @@ public class App {
                 System.out.println("-- ARQUEIRO --");
                 System.out.println("Informe o nome do arqueiro: ");
                 nome = scan.nextLine();
-                System.out.println("Seu arqueiro se chama: " + nome.toUpperCase());
+                System.out.println("\nSeu arqueiro se chama: " + nome.toUpperCase());
                 Arqueiro arqueiro = new Arqueiro(nome);
                 personagens.add(arqueiro);
             break;
@@ -46,7 +48,7 @@ public class App {
                 System.out.println("-- MAGO --");
                 System.out.println("Informe o nome do mago: ");
                 nome = scan.nextLine();
-                System.out.println("Seu mago se chama: " + nome.toUpperCase());
+                System.out.println("\nSeu mago se chama: " + nome.toUpperCase());
                 Mago mago = new Mago(nome);
                 personagens.add(mago);
             break;
@@ -58,7 +60,16 @@ public class App {
     }
 
     public void jogar(){
+        int dado = random.nextInt(21);
+        int vida;
         jogoBatalha.setAtributos(personagens);
+        for (Personagem personagem : personagens) {
+            vida = personagem.calcVida(dado);
+            personagem.setVida(vida);
+        }
+        
+
+
         jogoBatalha.atk(personagens.get(0), personagens.get(1));
         for (Personagem personagem : personagens) {
             System.out.println("=====");
@@ -72,7 +83,7 @@ public class App {
             Boolean personagens_escolhidos = false;
             while (true) {
             System.out.println("---BATALHA DE PERSONAGENS!---");
-            System.out.println("______________________________\n");
+            System.out.println("______________________________");
             System.out.println("ESCOLHA UMA OPÇÃO: ");
             System.out.println("[1] Escolher Lutadores");
             System.out.println("[2] Jogar");
@@ -87,7 +98,7 @@ public class App {
                         System.out.println("______________________________\n");
                         System.out.println("Escolha o personagem de ataque:");
                         escolhaPersonagens();
-                        System.out.println("Escolha o personagem de defesa:");
+                        System.out.println("\nEscolha o personagem de defesa:");
                         escolhaPersonagens();
                         personagens_escolhidos = true;    
                     }else{
